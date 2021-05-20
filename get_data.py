@@ -8,12 +8,16 @@ class GetData:
         self.df = pd.read_csv(csv)
 
     def df_info(self):
+        len_df = len(self.df)
+        all_columns = len(self.df.columns)
+        all_nan = self.df.isna().sum().sum()
 
         print(f"""
-        Longueur du dataset : {len(self.df)} enregistrements
-        Nombre de colonnes : {len(self.df.columns)}
+        Longueur du dataset : {len_df} enregistrements
+        Nombre de colonnes : {all_columns}
         Nombre total de celulles non nulles : {self.df.notna().sum().sum()}
-        Nombre total de cellules nulles : {self.df.isna().sum().sum()}, soit {round(self.df.isna().sum().sum()/(len(self.df)*len(self.df.columns))*100,2)} %
+        Nombre total de cellules nulles : {all_nan}
+        soit {round(all_nan/(len_df*all_columns) * 100,2)} %
         """)
 
         echantillonColonnes = []
@@ -21,8 +25,12 @@ class GetData:
             listcolumn = str(list(self.df[i].head(5)))
             echantillonColonnes.append(listcolumn)
             echantillonColonnes[0:5]
-        obs = pd.DataFrame({'colonne': list(self.df.columns), 'type': list(self.df.dtypes), 'Echantillon':echantillonColonnes, '% de valeurs nulles':round(self.df.isna().sum()/len(self.df)*100,2)})
-        display(obs)
+        obs = pd.DataFrame({'colonne': list(self.df.columns),
+                            'type': list(self.df.dtypes),
+                            'Echantillon': echantillonColonnes,
+                            "% de valeurs nulles":
+                            round(self.df.isna().sum() / len_df * 100, 2)})
+        return obs
 
     def f_look(self, target):
         print(f'Analyse de la feature {target}')

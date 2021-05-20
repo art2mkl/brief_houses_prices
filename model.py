@@ -29,11 +29,11 @@ class Model:
         return resultats.summary()
 
     def sk_regression(self, df):
-        modeleReg=LinearRegression()
-        modeleReg.fit(df[self.x],df[self.y])
+        modeleReg = LinearRegression()
+        modeleReg.fit(df[self.x], df[self.y])
         print(f'La constante est égale à : {modeleReg.intercept_}')
         print(f'Les coefficients directeurs sont respectivement de : {modeleReg.coef_}')
-        Rcarre = modeleReg.score(df[self.x],df[self.y])
+        Rcarre = modeleReg.score(df[self.x], df[self.y])
         print(f'le R² est de : {Rcarre}')
         self.sk_fit = modeleReg
 
